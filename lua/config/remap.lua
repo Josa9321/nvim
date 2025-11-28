@@ -35,6 +35,8 @@ vim.keymap.set("n", "<leader>F", function()
     vim.lsp.buf.format()
 end, {})
 
+vim.keymap.set("n", "<leader>m", ":Dashboard <CR>") --
+
 vim.keymap.set("n", "<leader>tc", function()
     local cb = vim.opt.clipboard:get()
 
