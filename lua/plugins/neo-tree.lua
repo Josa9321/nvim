@@ -1,5 +1,3 @@
-
-
 return {
     "nvim-neo-tree/neo-tree.nvim",
     branch = "v3.x",
@@ -10,8 +8,19 @@ return {
     },
     lazy = false, -- neo-tree will lazily load itself
 
+    opts = {
+        event_handlers = {
+            {
+                event = "neo_tree_buffer_enter",
+                handler = function()
+                    vim.opt_local.relativenumber = true
+                end,
+            }
+        },
+    },
+
+
     -- keymap 
-    -- vim.keymap.set("n", "<leader>pv", ":Neotree toggle left<CR>")
     vim.keymap.set("n", "<leader>pv", function()
           -- Check if a Neo-tree window exists
           for _, win in ipairs(vim.api.nvim_list_wins()) do
