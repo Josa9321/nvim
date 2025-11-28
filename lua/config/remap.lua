@@ -31,32 +31,26 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+vim.keymap.set("n", "<leader>F", function()
+    vim.lsp.buf.format()
+end, {})
 
 vim.keymap.set("n", "<leader>tc", function()
-  local cb = vim.opt.clipboard:get()
+    local cb = vim.opt.clipboard:get()
 
-  -- check if unnamedplus is active in the list
-  local hasUnnamedPlus = false
-  for _, v in ipairs(cb) do
-    if v == "unnamedplus" then
-      hasUnnamedPlus = true
+    -- check if unnamedplus is active in the list
+    local hasUnnamedPlus = false
+    for _, v in ipairs(cb) do
+        if v == "unnamedplus" then
+            hasUnnamedPlus = true
+        end
     end
-  end
 
-  if hasUnnamedPlus then
-    vim.opt.clipboard = {}
-    print("Clipboard: DISABLED")
-  else
-    vim.opt.clipboard = { "unnamedplus" }
-    print("Clipboard: ENABLED (unnamedplus)")
-  end
+    if hasUnnamedPlus then
+        vim.opt.clipboard = {}
+        print("Clipboard: DISABLED")
+    else
+        vim.opt.clipboard = { "unnamedplus" }
+        print("Clipboard: ENABLED (unnamedplus)")
+    end
 end, { desc = "Toggle clipboard" })
--- vim.keymap.set("n", "<leader>tc", function()
---     if vim.opt.clipboard:get() == "" then
---         vim.opt.clipboard = "unnamedplus"
---         print("Clipboard: ENABLED (unnamedplus)")
---     else
---         vim.opt.clipboard = ""
---         print("Clipboard: DISABLED")
---     end
--- end, { desc = "Toggle clipboard provider" })
