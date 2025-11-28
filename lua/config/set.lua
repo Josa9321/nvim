@@ -2,7 +2,6 @@ vim.o.rnu = true
 vim.o.nu = true
 vim.opt.formatoptions:remove({ "c", "r", "o" })
 
-
 vim.opt.tabstop = 4
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
