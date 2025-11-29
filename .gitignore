@@ -1,2 +1,5 @@
 pack
 .git
+
+# test files
+*.cpp
