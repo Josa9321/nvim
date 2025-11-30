@@ -112,6 +112,13 @@ vim.lsp.config.clangd = {
 
 vim.lsp.enable("clangd")
 
+vim.lsp.config.texlab = {
+    cmd = {'/data/data/com.termux/files/usr/bin/texlab'},
+    filetypes = { "tex"},
+    capabilities = capabilities,
+}
+
+vim.lsp.enable('texlab')
 
 -- -- Set up nvim-cmp.
 -- local cmp = require('cmp')

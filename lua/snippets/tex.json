@@ -1,0 +1,42 @@
+{
+   "Inline Math": {
+      "prefix": "mm",
+      "body": [
+         "$${1}$"
+      ],
+      "description": "Inline math mode"
+   },
+   "Display Math": {
+      "prefix": "dm",
+      "body": [
+         "\\[",
+         "\t${1}",
+         "\\]"
+      ],
+      "description": "Display math mode"
+   },
+   "Environment": {
+      "prefix": "env",
+      "body": [
+         "\\begin{${1:environment}}",
+         "\t${2:content}",
+         "\\end{$1}"
+      ],
+      "description": "General LaTeX environment"
+   },
+   "Article Template": {
+      "prefix": "ar",
+      "body": [
+         "\\documentclass{article}",
+         "",
+         "\\title{${1}}",
+         "\\author{${2}}",
+         "",
+         "\\begin{document}",
+         "\\maketitle",
+         "\t${3}",
+         "\\end{document}"
+      ],
+      "description": "Template for article documentclass"
+   }
+}

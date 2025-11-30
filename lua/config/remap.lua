@@ -28,7 +28,7 @@ vim.keymap.set("n", "<leader>F", function()
 end, {})
 
 -- Dashboard call
-vim.keymap.set("n", "<leader>m", ":Dashboard <CR>") --
+vim.keymap.set("n", "<leader>m", "<cmd>Dashboard <CR>") --
 
 -- Comunicate with clipboard only when specified
 vim.keymap.set("n", "<leader>tc", function()
