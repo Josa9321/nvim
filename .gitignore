@@ -1,5 +1,12 @@
 pack
 .git
 
+lazy-lock.json
+
+
 # test files
 *.cpp
+*.py
+*.hpp
+*.jl
+*.tex
