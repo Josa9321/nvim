@@ -64,7 +64,7 @@ end, { desc = "Toggle clipboard" })
 local betterTerm = require('betterTerm')
 
 -- Toggle the first terminal (ID defaults to index_base, which is 0)
-vim.keymap.set({"n", "t"}, "<C-l>", function() betterTerm.open() end, { desc = "Toggle terminal" })
+vim.keymap.set({"n", "t"}, "<C-t>", function() betterTerm.open() end, { desc = "Toggle terminal" })
 
 -- Open a specific terminal
 vim.keymap.set({"n", "t"}, "<C-/>", function() betterTerm.open(1) end, { desc = "Toggle terminal 1" })
