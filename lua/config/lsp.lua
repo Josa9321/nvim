@@ -114,3 +114,25 @@ vim.lsp.config.clangd = {
 }
 
 vim.lsp.enable("clangd")
+
+-- Julia
+vim.lsp.config.julia = {
+    cmd = {
+        -- 'julia --project -e "using LanguageServer; runserver()"',
+        'julia', '--project', '--startup-file=no', '--history-file=no', '-e', [[
+using LanguageServer;
+using Pkg;
+import StaticLint;
+import SymbolServer;
+env_path = dirname(Pkg.Types.Context().env.project_file);
+
+server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
+server.runlinter = true;
+run(server);
+        ]]
+    },
+    filetypes = { "julia" },
+    capabilities = capabilities,
+}
+
+vim.lsp.enable("julia")
