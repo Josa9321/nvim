@@ -69,12 +69,14 @@ cmp.setup({
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
+vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 
 -- Languages Servers
 
 -- Lua
 vim.lsp.config.lua_ls = {
-    cmd = {'lua-language-server'},
+    cmd = { 'lua-language-server' },
     filetypes = { "lua" },
     root_markers = { { ".luarc.json", ".luarc.jsonc" }, ".git" },
     capabilities = capabilities,
@@ -120,15 +122,15 @@ vim.lsp.config.julia = {
     cmd = {
         -- 'julia --project -e "using LanguageServer; runserver()"',
         'julia', '--project', '--startup-file=no', '--history-file=no', '-e', [[
-using LanguageServer;
-using Pkg;
-import StaticLint;
-import SymbolServer;
-env_path = dirname(Pkg.Types.Context().env.project_file);
+            using LanguageServer;
+            using Pkg;
+            import StaticLint;
+            import SymbolServer;
+            env_path = dirname(Pkg.Types.Context().env.project_file);
 
-server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
-server.runlinter = true;
-run(server);
+            server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
+            server.runlinter = true;
+            run(server);
         ]]
     },
     filetypes = { "julia" },
