@@ -176,3 +176,38 @@ vim.lsp.config.julia = {
 }
 
 vim.lsp.enable("julia")
+
+-- LaTeX
+vim.lsp.config.texlab = {
+    cmd = { "texlab" },
+    filetypes = { "tex", "bib", "latex" },
+    settings = {
+        texlab = {
+            build = {
+                auxDirectory = "build",
+                executable = "tectonic",
+                args = {
+                    "-X", "compile",
+                    "%f",
+                    "--synctex",
+                    "--keep-logs",
+                    "--keep-intermediates"
+                },
+                onSave = true,
+                forwardSearchAfter = true,
+            },
+            forwardSearch = {
+                executable = "zathura",
+                args = { "--synctex-forward", "%l:1:%f", "%p" },
+            },
+            chktex = { onOpenAndSave = true, onEdit = false },
+            bibtexFormatter = "latexindent",
+            latexFormatter = "latexindent",
+            latexindent = {
+                modifyLineBreaks = false
+            }
+        }
+    }
+}
+
+vim.lsp.enable('texlab')
