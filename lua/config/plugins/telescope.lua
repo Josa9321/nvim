@@ -17,3 +17,5 @@ local opts = { noremap = true }
 vim.keymap.set('n', '<leader>bn', function()
   vim.cmd.bnext()
 end, opts)
+
+vim.keymap.set('n', '<C-w>', '<cmd> q <CR>')
