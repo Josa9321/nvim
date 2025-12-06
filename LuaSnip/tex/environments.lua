@@ -5,10 +5,48 @@ local t = ls.text_node
 local i = ls.insert_node
 local f = ls.function_node
 local d = ls.dynamic_node
+local c = ls.choice_node
 local fmta = require("luasnip.extras.fmt").fmta
 local rep = require("luasnip.extras").rep
 
 local line_begin = require("luasnip.extras.expand_conditions").line_begin
+
+local rec_ls
+rec_ls = function()
+	return sn(
+		nil,
+		c(1, {
+			-- Order is important, sn(...) first would cause infinite loop of expansion.
+			t(""),
+			sn(nil, { t({ "", "\t\\item " }), i(1), d(2, rec_ls, {}) }),
+		})
+	)
+end
+
+local tex_utils = {}
+tex_utils.in_mathzone = function() -- math context detection
+    return vim.fn['vimtex#syntax#in_mathzone']() == 1
+end
+tex_utils.in_text = function()
+    return not tex_utils.in_mathzone()
+end
+tex_utils.in_comment = function() -- comment detection
+    return vim.fn['vimtex#syntax#in_comment']() == 1
+end
+tex_utils.in_env = function(name) -- generic environment detection
+    local is_inside = vim.fn['vimtex#env#is_inside'](name)
+    return (is_inside[1] > 0 and is_inside[2] > 0)
+end
+-- A few concrete environments---adapt as needed
+tex_utils.in_equation = function() -- equation environment detection
+    return tex_utils.in_env('equation')
+end
+tex_utils.in_itemize = function() -- itemize environment detection
+    return tex_utils.in_env('itemize')
+end
+tex_utils.in_tikz = function() -- TikZ picture environment detection
+    return tex_utils.in_env('tikzpicture')
+end
 
 local get_visual = function(args, parent)
     if (#parent.snippet.env.LS_SELECT_RAW > 0) then
@@ -17,6 +55,8 @@ local get_visual = function(args, parent)
         return sn(nil, i(1))
     end
 end
+
+
 
 return {
     s(
@@ -69,7 +109,7 @@ return {
         )
     ),
     s(
-        { trig = 'fig', dscr = 'Make an figure environment', snippetType = 'autosnippet', condition = line_begin },
+        { trig = 'fig', dscr = 'Make a figure environment', snippetType = 'autosnippet', condition = line_begin },
         fmta(
             [[
             \begin{figure}[<>]
@@ -88,14 +128,14 @@ return {
         )
     ),
     s(
-        { trig = 'tab', dscr = 'Make an figure environment', snippetType = 'autosnippet', condition = line_begin },
+        { trig = 'tab', dscr = 'Make a table environment', snippetType = 'autosnippet', condition = line_begin },
         fmta(
             [[
             \begin{table}[<>]
                 \centering
                 \begin{tabular}{<>}
                      &  \\
-                     & 
+                     &
                 \end{tabular}
                 \caption{<>}
                 \label{<>}
@@ -109,4 +149,14 @@ return {
             }
         )
     ),
+    s(
+        {trig = ";i", snippetType='autosnippet', condition = tex_utils.in_itemize},
+        fmta('\\item <>', {d(1, get_visual)})
+    ),
+    s("ls", {
+        t({ "\\begin{itemize}", "\t\\item " }),
+        i(1),
+        d(2, rec_ls, {}),
+        t({ "", "\\end{itemize}" }),
+    }),
 }

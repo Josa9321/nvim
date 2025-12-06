@@ -9,7 +9,7 @@ vim.keymap.set('n', '<leader>fs', function()
 	builtin.grep_string({search = vim.fn.input("grep > ")}) 
 end, { desc = 'Telescope files search' })
 
-vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = 'Telescope git files' })
+-- vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = 'Telescope git files' })
 
 
 local opts = { noremap = true }

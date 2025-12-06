@@ -86,10 +86,10 @@ vim.keymap.set("n", "<leader>rc",
     { silent = true }
 )
 
-vim.keymap.set("n", "<C-h>", "<C-w>h")
-vim.keymap.set("n", "<C-l>", "<C-w>l")
-vim.keymap.set("n", "<C-j>", "<C-w>j")
-vim.keymap.set("n", "<C-k>", "<C-w>k")
+vim.keymap.set("n", "<A-h>", "<C-w>h")
+vim.keymap.set("n", "<A-l>", "<C-w>l")
+vim.keymap.set("n", "<A-j>", "<C-w>j")
+vim.keymap.set("n", "<A-k>", "<C-w>k")
 
 vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>")
 vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>")
