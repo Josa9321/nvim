@@ -8,13 +8,16 @@ return {
         -- 's1n7ax/nvim-window-picker',
         "nvim-tree/nvim-web-devicons", -- optional, but recommended
     },
-    lazy = false,                     -- neo-tree will lazily load itself
+    lazy = false,                      -- neo-tree will lazily load itself
 
     opts = {
         filesystem = {
             filtered_items = {
                 visible = true,
             },
+        },
+        source_selector = {
+            winbar = true,
         },
         event_handlers = {
             {

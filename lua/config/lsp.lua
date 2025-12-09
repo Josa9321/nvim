@@ -175,7 +175,7 @@ vim.lsp.config.texlab = {
                     "--keep-logs",
                     "--keep-intermediates"
                 },
-                onSave = true,
+                onSave = false,
                 forwardSearchAfter = true,
             },
             forwardSearch = {
