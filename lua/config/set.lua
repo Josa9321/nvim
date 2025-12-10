@@ -17,12 +17,14 @@ vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 vim.opt.undofile = true
 
 vim.opt.hlsearch = false
+vim.opt.cursorline = true
 vim.opt.incsearch = true
 
 vim.opt.termguicolors = true
 
+vim.opt.sidescrolloff = 8
 vim.opt.scrolloff = 8
--- vim.opt.signcolumn = "auto:2"
+vim.opt.signcolumn = "auto:2"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
