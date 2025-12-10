@@ -1,37 +1,39 @@
+local map = vim.keymap.set
+
 vim.g.mapleader = " "
 
-vim.keymap.set('v', "J", ":m '>+1<CR>gv=gv")
-vim.keymap.set('v', "K", ":m '>-2<CR>gv=gv")
+map('v', "J", ":m '>+1<CR>gv=gv")
+map('v', "K", ":m '>-2<CR>gv=gv")
 
 
-vim.keymap.set('n', "<C-d>", '<C-d>zz')
-vim.keymap.set('n', "<C-u>", '<C-u>zz')
+map('n', "<C-d>", '<C-d>zz')
+map('n', "<C-u>", '<C-u>zz')
 
 
-vim.keymap.set('n', "n", "nzzzv")
-vim.keymap.set('n', "N", "Nzzzv")
+map('n', "n", "nzzzv")
+map('n', "N", "Nzzzv")
 
-vim.keymap.set('x', '<leader>p', "\"_dP")
+map('x', '<leader>p', "\"_dP")
 
-vim.keymap.set("n", "Q", "<nop>")
-vim.keymap.set("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
+map("n", "Q", "<nop>")
+map("n", "<C-f>", "<cmd>silent !tmux neww tmux-sessionizer<CR>")
 
 
-vim.keymap.set('n', "<C-k>", "<cmd>cnext<CR>zz")
-vim.keymap.set('n', "<C-j>", "<cmd>cprev<CR>zz")
-vim.keymap.set('n', "<leader>k", "<cmd>lnext<CR>zz")
-vim.keymap.set('n', "<leader>j", "<cmd>lprev<CR>zz")
+map('n', "<C-k>", "<cmd>cnext<CR>zz")
+map('n', "<C-j>", "<cmd>cprev<CR>zz")
+map('n', "<leader>k", "<cmd>lnext<CR>zz")
+map('n', "<leader>j", "<cmd>lprev<CR>zz")
 
 -- Format all file according to language server
-vim.keymap.set("n", "<leader>F", function()
+map("n", "<leader>F", function()
     vim.lsp.buf.format()
 end, {})
 
 -- Dashboard call
-vim.keymap.set("n", "<leader>m", "<cmd>Dashboard <CR>") --
+map("n", "<leader>m", "<cmd>Dashboard <CR>") --
 
 -- Comunicate with clipboard only when specified
-vim.keymap.set("n", "<leader>tc", function()
+map("n", "<leader>tc", function()
     local cb = vim.opt.clipboard:get()
 
     -- check if unnamedplus is active in the list
@@ -52,46 +54,57 @@ vim.keymap.set("n", "<leader>tc", function()
 end, { desc = "Toggle clipboard" })
 
 -- -- RunCode Plugin
--- vim.keymap.set('n', '<leader>rr', ':RunCode<CR>', { noremap = true, silent = false })
--- vim.keymap.set('n', '<leader>rf', ':RunFile<CR>', { noremap = true, silent = false })
--- vim.keymap.set('n', '<leader>rft', ':RunFile tab<CR>', { noremap = true, silent = false })
--- vim.keymap.set('n', '<leader>rp', ':RunProject<CR>', { noremap = true, silent = false })
--- vim.keymap.set('n', '<leader>rc', ':RunClose<CR>', { noremap = true, silent = false })
--- vim.keymap.set('n', '<leader>crf', ':CRFiletype<CR>', { noremap = true, silent = false })
--- vim.keymap.set('n', '<leader>crp', ':CRProjects<CR>', { noremap = true, silent = false })
+-- map('n', '<leader>rr', ':RunCode<CR>', { noremap = true, silent = false })
+-- map('n', '<leader>rf', ':RunFile<CR>', { noremap = true, silent = false })
+-- map('n', '<leader>rft', ':RunFile tab<CR>', { noremap = true, silent = false })
+-- map('n', '<leader>rp', ':RunProject<CR>', { noremap = true, silent = false })
+-- map('n', '<leader>rc', ':RunClose<CR>', { noremap = true, silent = false })
+-- map('n', '<leader>crf', ':CRFiletype<CR>', { noremap = true, silent = false })
+-- map('n', '<leader>crp', ':CRProjects<CR>', { noremap = true, silent = false })
 
 
 local betterTerm = require('betterTerm')
 
 -- Toggle the first terminal (ID defaults to index_base, which is 0)
-vim.keymap.set({"n", "t"}, "<C-t>", function() betterTerm.open() end, { desc = "Toggle terminal" })
+map({"n", "t"}, "<C-t>", function() betterTerm.open() end, { desc = "Toggle terminal" })
 
 -- Open a specific terminal
-vim.keymap.set({"n", "t"}, "<C-/>", function() betterTerm.open(1) end, { desc = "Toggle terminal 1" })
+map({"n", "t"}, "<C-/>", function() betterTerm.open(1) end, { desc = "Toggle terminal 1" })
 
 -- Select a terminal to focus
-vim.keymap.set("n", "<leader>tt", betterTerm.select, { desc = "Select terminal" })
+map("n", "<leader>tt", betterTerm.select, { desc = "Select terminal" })
 
 -- Rename the current terminal
-vim.keymap.set("n", "<leader>tr", betterTerm.rename, { desc = "Rename terminal" })
+map("n", "<leader>tr", betterTerm.rename, { desc = "Rename terminal" })
 
 -- Toggle the tabs bar
-vim.keymap.set("n", "<leader>tb", betterTerm.toggle_tabs, { desc = "Toggle terminal tabs" })
+map("n", "<leader>tb", betterTerm.toggle_tabs, { desc = "Toggle terminal tabs" })
 
 
 
 
-vim.keymap.set("n", "<leader>rc",
+map("n", "<leader>rc",
     ":w<CR>:!clang++ % -o %:r && %:r <CR>",
     { silent = true }
 )
 
-vim.keymap.set("n", "<A-h>", "<C-w>h")
-vim.keymap.set("n", "<A-l>", "<C-w>l")
-vim.keymap.set("n", "<A-j>", "<C-w>j")
-vim.keymap.set("n", "<A-k>", "<C-w>k")
+map("n", "<A-h>", "<C-w>h")
+map("n", "<A-l>", "<C-w>l")
+map("n", "<A-j>", "<C-w>j")
+map("n", "<A-k>", "<C-w>k")
 
-vim.keymap.set("n", "<C-Up>", "<cmd>resize +2<cr>")
-vim.keymap.set("n", "<C-Down>", "<cmd>resize -2<cr>")
-vim.keymap.set("n", "<C-Left>", "<cmd>vertical resize -5<cr>")
-vim.keymap.set("n", "<C-Right>", "<cmd>vertical resize +5<cr>")
+map("n", "<C-Up>", "<cmd>resize +2<cr>")
+map("n", "<C-Down>", "<cmd>resize -2<cr>")
+map("n", "<C-Left>", "<cmd>vertical resize -5<cr>")
+map("n", "<C-Right>", "<cmd>vertical resize +5<cr>")
+
+map("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
+
+map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
+map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+
+map("n", "gl", "$", { desc = "Go to end of line" })
+map("n", "gh", "^", { desc = "Go to start of line" })
+
+map("v", "<", "<gv")
+map("v", ">", ">gv")

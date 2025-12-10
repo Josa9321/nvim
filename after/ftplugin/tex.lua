@@ -12,7 +12,3 @@ opt.tabstop=4
 opt.sw=4
 opt.linebreak=true
 opt.breakindent=true
-
-map('n', '<Down>', 'gj')
-map('n', '<Up>', 'gk')
-
