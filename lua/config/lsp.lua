@@ -56,7 +56,8 @@ cmp.setup({
         { name = 'nvim_lsp' },
         { name = 'luasnip' }, -- For luasnip users.
         { name = 'buffer' },
-        { name = 'path' }
+        { name = 'path' },
+        { name = "latex_symbols" },
     })
 })
 
@@ -81,9 +82,10 @@ cmp.setup.cmdline(':', {
 
 cmp.setup.filetype("tex", {
     sources = {
+        { name = 'nvim_lsp' },
         { name = 'vimtex' },
         { name = 'luasnip' },
-        { name = 'buffer' },
+        { name = 'path' },
     },
 })
 
@@ -140,7 +142,6 @@ vim.lsp.enable("clangd")
 -- Julia
 vim.lsp.config.julia = {
     cmd = {
-        -- 'julia --project -e "using LanguageServer; runserver()"',
         'julia', '--project', '--startup-file=no', '--history-file=no', '-e', [[
             using LanguageServer;
             using Pkg;
@@ -158,6 +159,18 @@ vim.lsp.config.julia = {
 }
 
 vim.lsp.enable("julia")
+
+-- R Program
+
+vim.lsp.config.R = {
+    cmd = {
+        'R', '--no-echo', '-e', '"languageserver::run()"' },
+    filetypes = { "R" },
+    capabilities = capabilities,
+}
+
+vim.lsp.enable("R")
+
 
 -- LaTeX
 vim.lsp.config.texlab = {
