@@ -143,6 +143,7 @@ vim.lsp.enable("clangd")
 vim.lsp.config.julia = {
     cmd = {
         'julia', '--project', '--startup-file=no', '--history-file=no', '-e', [[
+            using Revise
             using LanguageServer;
             using Pkg;
             import StaticLint;
@@ -156,6 +157,13 @@ vim.lsp.config.julia = {
     },
     filetypes = { "julia" },
     capabilities = capabilities,
+    settings = {
+      julia = {
+        completion = {
+          callSnippet = 'Replace',
+        },
+      },
+    },
 }
 
 vim.lsp.enable("julia")

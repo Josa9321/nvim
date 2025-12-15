@@ -29,8 +29,7 @@ map("n", "<leader>F", function()
     vim.lsp.buf.format()
 end, {})
 
--- Dashboard call
-map("n", "<leader>m", "<cmd>Dashboard <CR>") --
+map({"n", "i"}, "<C-s>", "<cmd>w<CR>")
 
 -- Comunicate with clipboard only when specified
 map("n", "<leader>tc", function()
@@ -102,6 +101,11 @@ map("t", "<esc><esc>", "<c-\\><c-n>", { desc = "Enter Normal Mode" })
 
 map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true, silent = true })
 map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
+
+map({ "n", "v" }, "<Down>", "v:count == 0 ? 'gj' : '<Down>'", { desc = "Down", expr = true, silent = true })
+map("i", "<Down>", "v:count == 0 ? '<C-o>gj' : '<Down>'", { desc = "Down", expr = true, silent = true })
+map({ "n", "v" }, "<Up>", "v:count == 0 ? 'gk' : '<Up>'", { desc = "Up", expr = true, silent = true })
+map("i", "<Up>", "v:count == 0 ? '<C-o>gk' : '<Up>'", { desc = "Up", expr = true, silent = true })
 
 map("n", "gl", "$", { desc = "Go to end of line" })
 map("n", "gh", "^", { desc = "Go to start of line" })

@@ -1,5 +1,6 @@
 vim.o.rnu = true
 vim.o.nu = true
+
 vim.opt.formatoptions:remove({ "c", "r", "o" })
 
 vim.opt.tabstop = 4
@@ -24,7 +25,7 @@ vim.opt.termguicolors = true
 
 vim.opt.sidescrolloff = 8
 vim.opt.scrolloff = 8
-vim.opt.signcolumn = "auto:2"
+vim.opt.signcolumn = "yes:2"
 vim.opt.isfname:append("@-@")
 
 vim.opt.updatetime = 50
