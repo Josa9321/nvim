@@ -12,3 +12,5 @@ opt.tabstop=4
 opt.sw=4
 opt.linebreak=true
 opt.breakindent=true
+
+map('n', '<leader>rc', "<cmd>VimtexCompile<CR>")

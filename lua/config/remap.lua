@@ -79,14 +79,6 @@ map("n", "<leader>tr", betterTerm.rename, { desc = "Rename terminal" })
 -- Toggle the tabs bar
 map("n", "<leader>tb", betterTerm.toggle_tabs, { desc = "Toggle terminal tabs" })
 
-
-
-
-map("n", "<leader>rc",
-    ":w<CR>:!clang++ % -o %:r && %:r <CR>",
-    { silent = true }
-)
-
 map("n", "<A-h>", "<C-w>h")
 map("n", "<A-l>", "<C-w>l")
 map("n", "<A-j>", "<C-w>j")
@@ -103,9 +95,13 @@ map({ "n", "x" }, "j", "v:count == 0 ? 'gj' : 'j'", { desc = "Down", expr = true
 map({ "n", "x" }, "k", "v:count == 0 ? 'gk' : 'k'", { desc = "Up", expr = true, silent = true })
 
 map({ "n", "v" }, "<Down>", "v:count == 0 ? 'gj' : '<Down>'", { desc = "Down", expr = true, silent = true })
-map("i", "<Down>", "v:count == 0 ? '<C-o>gj' : '<Down>'", { desc = "Down", expr = true, silent = true })
+map("i", "<Down>", "<C-o>gj", { desc = "Down"})
 map({ "n", "v" }, "<Up>", "v:count == 0 ? 'gk' : '<Up>'", { desc = "Up", expr = true, silent = true })
-map("i", "<Up>", "v:count == 0 ? '<C-o>gk' : '<Up>'", { desc = "Up", expr = true, silent = true })
+map("i", "<Up>", "<C-o>gk", { desc = "Up"})
+
+map("i", "<C-Del>", "<C-o>de")
+
+map("i", "", "<C-o>")
 
 map("n", "gl", "$", { desc = "Go to end of line" })
 map("n", "gh", "^", { desc = "Go to start of line" })

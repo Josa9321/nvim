@@ -33,7 +33,7 @@ vim.opt.updatetime = 50
 vim.opt.colorcolumn = "80"
 
 vim.g.mapleader = " "
-
+vim.g.airline_section_b = '%{strftime("%H:%M")}'
 
 
 vim.g.vimtex_compiler_method = "tectonic"
