@@ -103,8 +103,8 @@ map("i", "<C-Del>", "<C-o>de")
 
 map("i", "", "<C-o>")
 
-map("n", "gl", "$", { desc = "Go to end of line" })
-map("n", "gh", "^", { desc = "Go to start of line" })
+map("n", "gl", "g$", { desc = "Go to end of line" })
+map("n", "gh", "g^", { desc = "Go to start of line" })
 
 map("v", "<", "<gv")
 map("v", ">", ">gv")

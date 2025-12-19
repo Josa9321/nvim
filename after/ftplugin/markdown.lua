@@ -5,14 +5,10 @@ opt.wrap = true
 
 -- Buffer-local tweaks for TeX files
 opt.spell = true
-opt.spelllang = "en_us"
+opt.spelllang = {'pt_br', "en_us"}
 
 
 opt.tabstop=4
 opt.sw=4
 opt.linebreak=true
 opt.breakindent=true
-
-map('n', '<leader>rc', "<cmd>VimtexCompile<CR>")
-map('n', '{', "{zz")
-map('n', '}', "}zz")
