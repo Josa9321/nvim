@@ -90,6 +90,7 @@ cmp.setup.filetype("tex", {
 })
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
@@ -106,6 +107,7 @@ vim.lsp.config.lua_ls = {
     settings = {
         Lua = {
             runtime = { version = "LuaJIT" },
+            completion = {callSnippet = "both"}
         }
     }
 }
@@ -113,16 +115,37 @@ vim.lsp.config.lua_ls = {
 vim.lsp.enable("lua_ls")
 
 -- Python
-vim.lsp.config.pyright = {
-    cmd = {
-        'pyright-langserver',
-        "--stdio",
-    },
-    filetypes = { "python" },
-    capabilities = capabilities,
-}
+-- vim.lsp.config.pyright = {
+--     cmd = {
+--         'pyright-langserver',
+--         "--stdio",
+--     },
+--     filetypes = { "python" },
+--     capabilities = capabilities,
+-- }
+-- vim.lsp.enable("pyright")
 
-vim.lsp.enable("pyright")
+-- Define the configuration
+vim.lsp.config.basedpyright = {
+    capabilities = capabilities,
+    cmd = { "basedpyright-langserver", "--stdio" },
+    filetypes = { "python" },
+    root_markers = { "pyproject.toml", "setup.py", ".git", "requirements.txt" },
+    settings = {
+        basedpyright = {
+            analysis = {
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+                diagnosticMode = "openFilesOnly",
+            },
+        },
+        python = {
+            pythonPath = "~/anaconda3/bin/python",
+            completion = {callSnippet = "Replace"}
+        }
+    }
+}
+vim.lsp.enable("basedpyright")
 
 -- Cpp
 vim.lsp.config.clangd = {
