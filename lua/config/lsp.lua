@@ -89,6 +89,13 @@ cmp.setup.filetype("tex", {
     },
 })
 
+cmp.setup.filetype("txt", {
+    sources = {
+        { name = 'luasnip' },
+        { name = 'path' },
+    },
+})
+
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
