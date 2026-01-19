@@ -103,6 +103,15 @@ vim.api.nvim_set_keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", { n
 vim.api.nvim_set_keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 
 -- Languages Servers
+-- Markdown
+vim.lsp.config.marksman = {
+    cmd = { "/home/josa/Apps/marksman-linux-x64", "server" },
+    filetypes = { "markdown", "markdown.mdx" },
+    root_markers = { ".marksman.toml", ".git" },
+    capabilities = capabilities,
+}
+
+vim.lsp.enable("marksman")
 
 -- Lua
 vim.lsp.config.lua_ls = {
@@ -114,7 +123,7 @@ vim.lsp.config.lua_ls = {
     settings = {
         Lua = {
             runtime = { version = "LuaJIT" },
-            completion = {callSnippet = "both"}
+            completion = { callSnippet = "both" }
         }
     }
 }
@@ -148,7 +157,7 @@ vim.lsp.config.basedpyright = {
         },
         python = {
             pythonPath = "~/anaconda3/bin/python",
-            completion = {callSnippet = "Replace"}
+            completion = { callSnippet = "Replace" }
         }
     }
 }
@@ -170,33 +179,70 @@ vim.lsp.config.clangd = {
 vim.lsp.enable("clangd")
 
 -- Julia
-vim.lsp.config.julia = {
+vim.lsp.config('julials', {
     cmd = {
-        'julia', '--project', '--startup-file=no', '--history-file=no', '-e', [[
+        "julia",
+        "--project=" .. "~/.julia/environments/lsp/",
+        "--startup-file=no",
+        "--history-file=no",
+        "-e", [[
+            using Pkg
+            Pkg.instantiate()
             using Revise
-            using LanguageServer;
-            using Pkg;
-            import StaticLint;
-            import SymbolServer;
-            env_path = dirname(Pkg.Types.Context().env.project_file);
-
-            server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
-            server.runlinter = true;
-            run(server);
+            using LanguageServer
+        depot_path = get(ENV, "JULIA_DEPOT_PATH", "")
+        project_path = let
+            dirname(something(
+                ## 1. Finds an explicitly set project (JULIA_PROJECT)
+                Base.load_path_expand((
+                    p = get(ENV, "JULIA_PROJECT", nothing);
+                        p === nothing ? nothing : isempty(p) ? nothing : p
+                    )),
+                        ## 2. Look for a Project.toml file in the current working directory,
+                        ##    or parent directories, with $HOME as an upper boundary
+                        Base.current_project(),
+                        ## 3. First entry in the load path
+                        get(Base.load_path(), 1, nothing),
+                        ## 4. Fallback to default global environment,
+                        ##    this is more or less unreachable
+                    Base.load_path_expand("@v#.#"),
+                ))
+            end
+                    @info "Running language server" VERSION pwd() project_path depot_path
+                    server = LanguageServer.LanguageServerInstance(stdin, stdout, project_path, depot_path)
+        server.runlinter = true
+            run(server)
         ]]
     },
-    filetypes = { "julia" },
-    capabilities = capabilities,
-    settings = {
-      julia = {
-        completion = {
-          callSnippet = 'Replace',
-        },
-      },
-    },
-}
-
-vim.lsp.enable("julia")
+    filetypes = { 'julia' },
+    root_markers = { "Project.toml", "JuliaProject.toml" },
+    settings = {}
+})
+vim.lsp.enable("julials")
+-- vim.lsp.config.julia = {
+--     cmd = {
+--         'julia', '--project', '--startup-file=no', '--history-file=no', '-e', [[
+--             using Revise
+--             using LanguageServer;
+--             using Pkg;
+--
+--             server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
+--             server.runlinter = true;
+--             run(server);
+--         ]]
+--     },
+--     filetypes = { "julia" },
+--     capabilities = capabilities,
+--     settings = {
+--       julia = {
+--         completion = {
+--           callSnippet = 'Replace',
+--         },
+--       },
+--     },
+-- }
+--
+-- vim.lsp.enable("julia")
 
 -- R Program
 
