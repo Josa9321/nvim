@@ -64,11 +64,10 @@ end, { desc = "Toggle clipboard" })
 
 local betterTerm = require('betterTerm')
 
--- Toggle the first terminal (ID defaults to index_base, which is 0)
-map({"n", "t"}, "<C-t>", function() betterTerm.open() end, { desc = "Toggle terminal" })
 
 -- Open a specific terminal
-map({"n", "t"}, "<C-/>", function() betterTerm.open(1) end, { desc = "Toggle terminal 1" })
+map({"n", "t"}, "<C-0>", function() betterTerm.open(0) end, { desc = "Toggle terminal 0" })
+map({"n", "t"}, "<C-1>", function() betterTerm.open(1) end, { desc = "Toggle terminal 1" })
 
 -- Select a terminal to focus
 map("n", "<leader>tt", betterTerm.select, { desc = "Select terminal" })
