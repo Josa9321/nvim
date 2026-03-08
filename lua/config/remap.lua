@@ -9,6 +9,11 @@ map('v', "K", ":m '>-2<CR>gv=gv")
 map('n', "<C-d>", '<C-d>zz')
 map('n', "<C-u>", '<C-u>zz')
 
+map('n', "<PageUp>", '<C-u>zz')
+map('n', "<PageDown>", '<C-d>zz')
+
+map('n', "<C-A-Left>", '<cmd>tabprevious<CR>')
+map('n', "<C-A-Right>", '<cmd>tabnext<CR>')
 
 map('n', "n", "nzzzv")
 map('n', "N", "Nzzzv")
@@ -28,8 +33,6 @@ map('n', "<leader>j", "<cmd>lprev<CR>zz")
 map("n", "<leader>F", function()
     vim.lsp.buf.format()
 end, {})
-
-map({"n", "i"}, "<C-s>", "<cmd>w<CR>")
 
 -- Comunicate with clipboard only when specified
 map("n", "<leader>tc", function()
@@ -68,6 +71,9 @@ local betterTerm = require('betterTerm')
 -- Open a specific terminal
 map({"n", "t"}, "<C-0>", function() betterTerm.open(0) end, { desc = "Toggle terminal 0" })
 map({"n", "t"}, "<C-1>", function() betterTerm.open(1) end, { desc = "Toggle terminal 1" })
+map({"n", "t"}, "<C-2>", function() betterTerm.open(2) end, { desc = "Toggle terminal 2" })
+map({"n", "t"}, "<C-3>", function() betterTerm.open(3) end, { desc = "Toggle terminal 3" })
+map({"n", "t"}, "<C-4>", function() betterTerm.open(4) end, { desc = "Toggle terminal 4" })
 
 -- Select a terminal to focus
 map("n", "<leader>tt", betterTerm.select, { desc = "Select terminal" })
