@@ -5,10 +5,12 @@ return {
         "rcarriga/nvim-dap-ui",
         "nvim-neotest/nvim-nio",
         "theHamsta/nvim-dap-virtual-text",
+        "kdheepak/nvim-dap-julia",
     },
     config = function()
         local dap, dapui = require("dap"), require("dapui")
         local dap_virtual_text = require("nvim-dap-virtual-text")
+
         dap_virtual_text.setup()
         dapui.setup()
         dap.listeners.before.attach.dapui_config = function()
@@ -31,6 +33,8 @@ return {
         vim.keymap.set('n', '<F4>', function() dap.step_out() end)
 
         -- Debuggers config
+        local dap_julia = require("nvim-dap-julia")
+        dap_julia.setup()
         dap.adapters.cppdbg = {
             id = 'cppdbg',
             type = 'executable',

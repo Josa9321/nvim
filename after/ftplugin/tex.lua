@@ -5,7 +5,7 @@ opt.wrap = true
 
 -- Buffer-local tweaks for TeX files
 opt.spell = true
-opt.spelllang = "en_us"
+opt.spelllang = {'pt_br', "en_us"}
 
 
 opt.tabstop=4

@@ -283,3 +283,45 @@ vim.lsp.config.texlab = {
 }
 
 vim.lsp.enable('texlab')
+
+-- WEB DEVELOPMENT
+
+-- vim.lsp.config.biome = {
+--     cmd = { "biome", "lsp-proxy" },
+--     filetypes = { "astro", "css", "graphql", "html", "javascript", "javascriptreact", "json", "jsonc", "svelte", "typescript", "typescriptreact", "vue" },
+--     root_markers = { "biome.json", "biome.jsonc", ".git" },
+--     capabilities = capabilities,
+-- }
+-- vim.lsp.enable('biome')
+
+-- HTML
+vim.lsp.config.html = {
+    cmd = { "vscode-html-language-server", "--stdio" },
+    filetypes = { "html" },
+    root_markers = { ".git" },
+}
+
+vim.lsp.enable("html")
+
+-- CSS
+vim.lsp.config.cssls = {
+    cmd = { "vscode-css-language-server", "--stdio" },
+    filetypes = { "css" },
+    root_markers = { ".git" },
+}
+
+vim.lsp.enable("cssls")
+
+-- JavaScript / TypeScript
+vim.lsp.config.ts_ls = {
+    cmd = { "typescript-language-server", "--stdio" },
+    filetypes = {
+        "javascript",
+        "javascriptreact",
+        "typescript",
+        "typescriptreact",
+    },
+    root_markers = { "package.json", "tsconfig.json", ".git" },
+}
+
+vim.lsp.enable("ts_ls")

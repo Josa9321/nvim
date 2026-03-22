@@ -12,8 +12,9 @@ map('n', "<C-u>", '<C-u>zz')
 map('n', "<PageUp>", '<C-u>zz')
 map('n', "<PageDown>", '<C-d>zz')
 
-map('n', "<C-A-Left>", '<cmd>tabprevious<CR>')
-map('n', "<C-A-Right>", '<cmd>tabnext<CR>')
+map('n', "<C-h>", '<cmd>tabprevious<CR>')
+map('n', "<C-l>", '<cmd>tabnext<CR>')
+map('n', 'gtf', '<C-w>gf')
 
 map('n', "n", "nzzzv")
 map('n', "N", "Nzzzv")
