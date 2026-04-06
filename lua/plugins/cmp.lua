@@ -7,6 +7,7 @@ return {
         'hrsh7th/cmp-cmdline',
         'saadparwaiz1/cmp_luasnip',
         "kdheepak/cmp-latex-symbols",
+        "hrsh7th/cmp-nvim-lsp-signature-help",
         {
             "micangl/cmp-vimtex",
             ft = "tex",

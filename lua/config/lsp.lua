@@ -58,6 +58,7 @@ cmp.setup({
         { name = 'buffer' },
         { name = 'path' },
         { name = "latex_symbols" },
+        { name = 'nvim_lsp_signature_help' }
     })
 })
 
