@@ -8,7 +8,7 @@ vim.keymap.set('n', '<leader>fh', builtin.help_tags, { desc = 'Telescope help ta
 vim.keymap.set('n', '<leader>fs', function() 
 	builtin.grep_string({search = vim.fn.input("grep > ")}) 
 end, { desc = 'Telescope files search' })
-vim.keymap.set('n', '<leader>a', '<cmd>Telescope aerial<CR>')
+vim.keymap.set('n', '<leader>fa', '<cmd>Telescope aerial<CR>')
 
 -- vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = 'Telescope git files' })
 
