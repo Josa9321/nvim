@@ -142,24 +142,30 @@ vim.lsp.enable("lua_ls")
 -- }
 -- vim.lsp.enable("pyright")
 
+local function get_python_path()
+    local venv = os.getenv("VIRTUAL_ENV") or os.getenv("CONDA_PREFIX")
+    if venv then
+        return venv .. "/bin/python"
+    end
+    return "~/anaconda3/bin/python"
+end
+
 -- Define the configuration
 vim.lsp.config.basedpyright = {
     capabilities = capabilities,
-    cmd = { "basedpyright-langserver", "--stdio" },
+    cmd = { vim.fn.expand("~/anaconda3/bin/basedpyright-langserver"), "--stdio" },
     filetypes = { "python" },
     root_markers = { "pyproject.toml", "setup.py", ".git", "requirements.txt" },
     settings = {
         basedpyright = {
+            pythonPath = get_python_path(),
             analysis = {
                 autoSearchPaths = true,
                 useLibraryCodeForTypes = true,
                 diagnosticMode = "openFilesOnly",
             },
+            typeCheckingMode = "standard",
         },
-        python = {
-            pythonPath = "~/anaconda3/bin/python",
-            completion = { callSnippet = "Replace" }
-        }
     }
 }
 vim.lsp.enable("basedpyright")
@@ -186,18 +192,18 @@ vim.lsp.config('julials', {
         "--startup-file=no",
         "--history-file=no",
         "-e", [[
-            using Revise
-            using LanguageServer
-            using Pkg
+                using Revise
+                using LanguageServer
+                using Pkg
 
-            import StaticLint
-            import SymbolServer
+                import StaticLint
+                import SymbolServer
 
-            env_path = dirname(Pkg.Types.Context().env.project_file)
-            server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
-            server.runlinter = true;
-            run(server)
-        ]]
+                env_path = dirname(Pkg.Types.Context().env.project_file)
+                server = LanguageServer.LanguageServerInstance(stdin, stdout, env_path, "");
+                server.runlinter = true;
+                run(server)
+            ]]
     },
     filetypes = { 'julia' },
     root_markers = { "Project.toml", "JuliaProject.toml" },
