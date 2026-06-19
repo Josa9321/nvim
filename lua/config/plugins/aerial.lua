@@ -22,8 +22,9 @@ require("aerial").setup({
         "Struct",
         'Namespace',
         "Package",
+        "File",
+        "String",
     },
 })
 
--- You probably also want to set a keymap to toggle aerial
 vim.keymap.set("n", "<leader>o", "<cmd>AerialToggle!<CR>")
