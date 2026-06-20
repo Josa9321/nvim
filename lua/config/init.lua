@@ -1,6 +1,5 @@
 require("config.remap")
 
-require("config.plugins.aerial")
 require('config.plugins.colors')
 require("config.plugins.luasnip")
 require("config.plugins.harpoon")
