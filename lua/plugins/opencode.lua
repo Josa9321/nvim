@@ -10,9 +10,6 @@ return {
         vim.o.autoread = true -- Required for `vim.g.opencode_opts.events.reload`
 
         -- Recommended/example keymaps
-        vim.keymap.set("n", "<leader>ot", function()
-            require("opencode").toggle()
-        end, { desc = "Toggle embedded" })
         vim.keymap.set({ "n", "x" }, "<leader>oa", function() require("opencode").ask("@this: ") end,
             { desc = "Ask OpenCode…" })
         vim.keymap.set({ "n", "x" }, "<leader>os", function() require("opencode").select() end,
@@ -23,9 +20,9 @@ return {
         vim.keymap.set("n", "goo", function() return require("opencode").operator("@this ") .. "_" end,
             { desc = "Append line to OpenCode", expr = true })
 
-        vim.keymap.set("n", "<C-S-u>", function() require("opencode").command("session.half.page.up") end,
+        vim.keymap.set("n", "<C-.>", function() require("opencode").command("session.half.page.up") end,
             { desc = "Scroll OpenCode up" })
-        vim.keymap.set("n", "<C-S-d>", function() require("opencode").command("session.half.page.down") end,
+        vim.keymap.set("n", "<C-,>", function() require("opencode").command("session.half.page.down") end,
             { desc = "Scroll OpenCode down" })
     end,
 }
