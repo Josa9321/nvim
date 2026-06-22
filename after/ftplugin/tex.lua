@@ -21,7 +21,7 @@ local function texlab_request(method, desc)
     local client = vim.lsp.get_clients({ bufnr = 0, name = "texlab" })[1]
     if not client then
         vim.notify("Texlab not attached", vim.log.levels.WARN)
-        return
+        return false
     end
     vim.lsp.buf_request(0, method,
         vim.lsp.util.make_position_params(0, client.offset_encoding),
@@ -30,6 +30,7 @@ local function texlab_request(method, desc)
                 vim.notify(desc .. " failed: " .. err.message, vim.log.levels.ERROR)
             end
         end)
+    return true
 end
 
 map('n', '<leader>rc', function()

@@ -247,28 +247,40 @@ vim.lsp.config.R = {
 vim.lsp.enable("R")
 
 -- LaTeX
+local texlab_capabilities = vim.tbl_deep_extend("force", capabilities, {
+    textDocumentBuild = { dynamicRegistration = false },
+    textDocumentForwardSearch = { dynamicRegistration = false },
+})
+local executable = 'zathura'
+local args_tex = {
+    '--synctex-editor-command',
+    [[nvim-texlabconfig -file '%%%{input}' -line %%%{line} -server ]] .. vim.v.servername,
+    '--synctex-forward',
+    '%l:1:%f',
+    '%p',
+}
 vim.lsp.config.texlab = {
     cmd = { "texlab" },
     filetypes = { "tex", "bib", "latex" },
+    capabilities = texlab_capabilities,
     settings = {
         texlab = {
             build = {
                 auxDirectory = "build",
                 executable = "tectonic",
                 args = {
-                    "%f",
                     "-X",
                     "compile",
-                    "--keep-logs",
                     "--synctex",
                     "-Z", "shell-escape",
+                    "%f",
                 },
                 onSave = false,
-                forwardSearchAfter = false,
+                forwardSearchAfter = true,
             },
             forwardSearch = {
-                executable = "zathura",
-                args = { "--synctex-forward", "%l:1:%f", "%p" },
+                executable = executable,
+                args = args_tex, --{ "--synctex-forward", "%l:1:%f", "%p" },
             },
             chktex = { onOpenAndSave = true, onEdit = false },
             bibtexFormatter = "latexindent",
