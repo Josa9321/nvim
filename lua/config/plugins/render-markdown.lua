@@ -1,6 +1,6 @@
 require('render-markdown').setup({
   latex = {
-    enabled = true,
+    enabled = false,
     converter = {'utftex'}, --, 'latex2text'},
     position = 'above',  -- renders cleanly above the raw block
   },

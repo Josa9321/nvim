@@ -246,7 +246,6 @@ vim.lsp.config.R = {
 
 vim.lsp.enable("R")
 
-
 -- LaTeX
 vim.lsp.config.texlab = {
     cmd = { "texlab" },
@@ -257,14 +256,15 @@ vim.lsp.config.texlab = {
                 auxDirectory = "build",
                 executable = "tectonic",
                 args = {
-                    "-X", "compile",
                     "%f",
-                    "--synctex",
+                    "-X",
+                    "compile",
                     "--keep-logs",
-                    "--keep-intermediates"
+                    "--synctex",
+                    "-Z", "shell-escape",
                 },
                 onSave = false,
-                forwardSearchAfter = true,
+                forwardSearchAfter = false,
             },
             forwardSearch = {
                 executable = "zathura",
