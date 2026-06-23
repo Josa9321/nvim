@@ -150,12 +150,25 @@ local function get_python_path()
     return "~/anaconda3/bin/python"
 end
 
+local caps = capabilities -- your existing capabilities table
+caps.textDocument.semanticTokens = vim.NIL
+
 -- Define the configuration
 vim.lsp.config.basedpyright = {
-    capabilities = capabilities,
+    capabilities = caps,
     cmd = { vim.fn.expand("~/anaconda3/bin/basedpyright-langserver"), "--stdio" },
     filetypes = { "python" },
     root_markers = { "pyproject.toml", "setup.py", ".git", "requirements.txt" },
+    on_attach = function(client, bufnr)
+        -- Disable semantic tokens: basedpyright floods with -32801 errors
+        -- causing request queue saturation and buffer detachment
+        client.server_capabilities.semanticTokensProvider = nil
+
+        client.server_capabilities.signatureHelpProvider = {
+            triggerCharacters = { "(" },
+            retriggerCharacters = { "," },
+        }
+    end,
     settings = {
         basedpyright = {
             pythonPath = get_python_path(),
@@ -247,10 +260,6 @@ vim.lsp.config.R = {
 vim.lsp.enable("R")
 
 -- LaTeX
-local texlab_capabilities = vim.tbl_deep_extend("force", capabilities, {
-    textDocumentBuild = { dynamicRegistration = false },
-    textDocumentForwardSearch = { dynamicRegistration = false },
-})
 local executable = 'zathura'
 local args_tex = {
     '--synctex-editor-command',
@@ -262,7 +271,7 @@ local args_tex = {
 vim.lsp.config.texlab = {
     cmd = { "texlab" },
     filetypes = { "tex", "bib", "latex" },
-    capabilities = texlab_capabilities,
+    capabilities = capabilities,
     settings = {
         texlab = {
             build = {
