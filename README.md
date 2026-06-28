@@ -10,23 +10,24 @@ scientific computing (Julia, Python), and C++ development. Built on Neovim
 |---------------------|-------|
 | **Plugin Manager** | [lazy.nvim](https://github.com/folke/lazy.nvim) |
 | **Language**       | Lua |
-| **Completion**     | nvim-cmp, cmp-nvim-lsp, cmp-buffer, cmp-path, cmp-cmdline, cmp-latex-symbols, cmp-vimtex, cmp_luasnip |
+| **Completion**     | nvim-cmp, cmp-nvim-lsp, cmp-buffer, cmp-path, cmp-cmdline, cmp-latex-symbols, cmp-vimtex, cmp_luasnip, cmp-nvim-lsp-signature-help |
 | **Snippets**       | LuaSnip (with custom TeX snippets) |
 | **LSP**            | texlab, basedpyright, clangd, julials, lua_ls, marksman, R (languageserver), ts_ls, html, cssls |
 | **Treesitter**     | nvim-treesitter |
 | **Fuzzy Finder**   | telescope.nvim, telescope-fzf-native.nvim, telescope-ui-select.nvim, telescope-bibtex.nvim |
-| **File Explorer**  | neo-tree.nvim |
+| **File Explorer**  | neo-tree.nvim (nvim-web-devicons) |
 | **Git**            | gitsigns.nvim, vim-fugitive |
 | **Statusline**     | vim-airline (simple theme) |
 | **Colorscheme**    | rose-pine |
 | **LaTeX**          | vimtex, texlab, tectonic (compiler), zathura (viewer) |
-| **Debugging**      | nvim-dap, nvim-dap-ui, nvim-dap-virtual-text, nvim-dap-julia, cppdbg |
-| **AI/LLM**         | opencode.nvim, copilot.lua, mcphub.nvim |
-| **Markdown**       | render-markdown.nvim |
+| **Debugging**      | nvim-dap, nvim-dap-ui, nvim-dap-virtual-text, nvim-dap-julia, nvim-nio, cppdbg |
+| **AI/LLM**         | opencode.nvim, copilot.lua (copilot-lsp), mcphub.nvim |
+| **Markdown**       | render-markdown.nvim (mini.nvim) |
 | **Terminal**       | betterTerm.nvim |
 | **Navigation**     | harpoon (harpoon2), leap.nvim |
 | **Session**        | persistence.nvim |
-| **Misc**           | nvim-autopairs, vim-surround, undotree, trouble.nvim, csvview.nvim, cppman.nvim, cyclist.vim, image.nvim, snacks.nvim, plenary.nvim, nui.nvim, vim-dadbod |
+| **Utilities**      | snacks.nvim (bigfile, indent, input, picker, quickfile, scope, statuscolumn, words) |
+| **Misc**           | nvim-autopairs, vim-surround, undotree, trouble.nvim, csvview.nvim, cppman.nvim, cyclist.vim, image.nvim, plenary.nvim, nui.nvim, vim-dadbod, nvim-lspconfig |
 
 ## Project Structure
 
@@ -48,11 +49,11 @@ scientific computing (Julia, Python), and C++ development. Built on Neovim
 │   │       ├── harpoon.lua   # Harpoon keymaps
 │   │       ├── telescope.lua # Telescope find/grep/buffer keymaps
 │   │       ├── autopairs.lua # Disable in Telescope/vim
-│   │       ├── gitsigns.lua  # Gitsigns signs + `on_attach` mappings
-│   │       ├── vimtex.lua    # Vimtex disable compiler (texlab handles it)
+│   │       ├── gitsigns.lua  # Gitsigns signs + on_attach mappings
+│   │       ├── vimtex.lua    # Vimtex syntax only; texlab handles builds
 │   │       └── render-markdown.lua # Markdown rendering options
 │   └── plugins/
-│       ├── *.lua             # ~30 individual plugin specs (see below)
+│       ├── *.lua             # 32 individual plugin specs (auto-imported)
 ├── after/ftplugin/
 │   ├── cpp.lua               # C++ compile-and-run mapping
 │   ├── julia.lua             # Julia run mapping
@@ -103,11 +104,12 @@ Languages configured with `vim.lsp.config` (Neovim 0.12+):
 ### Completion
 
 `nvim-cmp` configured with multiple sources and smart keybindings:
-- `<C-n>` / `<C-p>` navigate or confirm single-entry
+- `<C-n>` / `<C-p>` navigate or confirm single-entry; jumps in LuaSnip if no menu
 - `<CR>` confirms; expands luasnip if expandable
 - `<C-e>` aborts completion
-- Separate sources for `tex` and `txt` filetypes
+- Separate sources for `tex` (nvim_lsp + vimtex + luasnip) and `txt` (buffer only)
 - Cmdline completion for `/`, `?`, and `:`
+- Signature help via `cmp-nvim-lsp-signature-help`
 
 ### Debugging
 
@@ -115,12 +117,26 @@ Languages configured with `vim.lsp.config` (Neovim 0.12+):
 supports. DAP UI opens automatically on attach/launch and closes on
 termination. Keymaps: `<Leader>dt` toggle breakpoint, `<Leader>dc`
 continue, `<F5>` step over, `<F6>` step into, `<F4>` step out.
+Staged cppdbg configurations for direct launch and gdbserver attachment.
 
 ### Terminal Management
 
 Integrated terminals via `betterTerm.nvim`. Access up to 5 terminals with
 `<C-0>` through `<C-4>`, select a terminal with `<leader>tt`, rename with
 `<leader>tr`, and toggle tab bar with `<leader>tb`.
+
+### Editor Enhancements (snacks.nvim)
+
+[snacks.nvim](https://github.com/folke/snacks.nvim) provides lightweight
+quality-of-life features:
+- **bigfile**: performance tweaks for large files
+- **indent**: indent guides
+- **input**: enhanced `vim.ui.input` dialogs
+- **picker**: fuzzy picker integration
+- **quickfile**: quick file open
+- **scope**: cursor-aware scope detection
+- **statuscolumn**: enhanced status column with fold/breakpoint indicators
+- **words**: word highlighting
 
 ### Git Integration
 
@@ -147,9 +163,10 @@ with a file argument, the last session is loaded.
 ### AI Assistance
 
 - **opencode.nvim**: `<leader>oa` opens a full tab for AI interaction,
-  `<leader>os` selects context, `go` / `goo` appends ranges or lines.
-- **copilot.lua**: GitHub Copilot completions.
-- **mcphub.nvim**: MCP server integration.
+  `<leader>os` selects context, `go` / `goo` appends ranges or lines,
+  `<C-,>` / `<C-.>` scrolls output. Built on opencode CLI agent framework.
+- **copilot.lua** + **copilot-lsp**: GitHub Copilot completions and LSP.
+- **mcphub.nvim**: MCP server hub integration.
 
 ## Getting Started
 
@@ -185,14 +202,18 @@ your system's package manager.
 |------|-----------|--------|
 | n    | `<C-d>`   | Page down, center cursor |
 | n    | `<C-u>`   | Page up, center cursor |
+| n    | `<PageDown>` / `<PageUp>` | Page down/up, center cursor |
 | n    | `<C-h>`   | Previous tab |
 | n    | `<C-l>`   | Next tab |
+| n    | `gtf`     | Open file under cursor in new tab (`<C-w>gf`) |
 | n    | `n` / `N` | Next/prev search result, center |
 | n    | `j` / `k` | Smart `gj`/`gk` (wrap-aware) |
 | n    | `gl`      | Go to end of line (`g$`) |
 | n    | `gh`      | Go to start of line (`g^`) |
 | n    | `<A-h/j/k/l>` | Window navigation |
 | n    | `<C-arrows>` | Window resize |
+| n    | `<C-f>`   | Open tmux sessionizer |
+| n    | `<C-LeftMouse>` | Smart open file path or URL under cursor |
 
 ### LSP
 
@@ -200,7 +221,8 @@ your system's package manager.
 |------|--------------|--------|
 | n    | `gD`         | Go to declaration |
 | n    | `gd`         | Go to definition |
-| n    | `<leader>F`  | Format buffer |
+| n    | `<leader>F`  | Format buffer (LSP) |
+| n    | `<leader>Fp` | Format Python with Black |
 
 ### Telescope
 
@@ -220,13 +242,20 @@ your system's package manager.
 | n    | `]c` / `[c`   | Next/prev hunk |
 | n    | `<leader>hs`  | Stage hunk |
 | n    | `<leader>hr`  | Reset hunk |
+| v    | `<leader>hs`  | Stage hunk (visual) |
+| v    | `<leader>hr`  | Reset hunk (visual) |
 | n    | `<leader>hp`  | Preview hunk |
+| n    | `<leader>hi`  | Preview hunk inline |
 | n    | `<leader>hb`  | Blame line |
 | n    | `<leader>hd`  | Diff this |
+| n    | `<leader>hD`  | Diff against index |
 | n    | `<leader>hS`  | Stage buffer |
 | n    | `<leader>hR`  | Reset buffer |
+| n    | `<leader>hQ`  | Set quickfix list (all) |
+| n    | `<leader>hq`  | Set quickfix list (buffer) |
 | n    | `<leader>tb`  | Toggle blame |
 | n    | `<leader>tw`  | Toggle word diff |
+| o, x | `ih`        | Select hunk (text object) |
 
 ### Harpoon
 
@@ -243,6 +272,16 @@ your system's package manager.
 |------|----------------|--------|
 | n    | `<C-k>` / `<C-j>` | Next/prev quickfix |
 | n    | `<leader>k` / `<leader>j` | Next/prev location |
+| n    | `<leader>xL`  | Location list (Trouble) |
+| n    | `<leader>xQ`  | Quickfix list (Trouble) |
+
+### Snippets (LuaSnip)
+
+| Mode | Key     | Action |
+|------|---------|--------|
+| i    | `<C-k>` | Expand or jump forward |
+| i, s | `<C-j>` | Jump backward |
+| i, s | `<C-E>` | Cycle choice |
 
 ### Filetype-Specific
 
@@ -253,6 +292,7 @@ your system's package manager.
 | python   | `<leader>rc`   | Run with `python %` |
 | tex      | `<leader>rc`   | Build with tectonic (via texlab) |
 | tex      | `<leader>rf`   | Forward search (zathura) |
+| tex      | `{` / `}`      | Paragraph motion, center cursor |
 
 ### Other
 
@@ -265,14 +305,20 @@ your system's package manager.
 | n    | `<C-0>`–`<C-4>` | Toggle terminal 0–4 |
 | n    | `<leader>u`    | Toggle undotree |
 | n    | `<leader>pv`   | Toggle neo-tree |
+| n    | `<leader>bn`   | Next buffer |
 | n    | `<leader>xx`   | Diagnostics (Trouble) |
 | n    | `<leader>xX`   | Buffer diagnostics (Trouble) |
 | n    | `<leader>cs`   | Document symbols (Trouble) |
 | n    | `<leader>cl`   | LSP references (Trouble) |
 | n    | `<leader>dt`   | Toggle DAP breakpoint |
 | n    | `<leader>dc`   | DAP continue |
+| n    | `<F5>`         | DAP step over |
+| n    | `<F6>`         | DAP step into |
+| n    | `<F4>`         | DAP step out |
+| n    | `<leader>cm`   | Open C++ man page for word |
+| n    | `<leader>cc`   | Search C++ man page |
 | n    | `<leader>oa`   | Open OpenCode in new tab |
-| n, x | `<leader>os`  | Select OpenCode |
+| n, x | `<leader>os`  | Select OpenCode context |
 | n, x | `go`          | Append range to OpenCode |
 | n    | `goo`         | Append line to OpenCode |
 | n, t | `<C-,>` / `<C-.>` | Scroll OpenCode up/down |
