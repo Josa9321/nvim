@@ -276,13 +276,10 @@ vim.lsp.config.texlab = {
         texlab = {
             build = {
                 auxDirectory = "build",
-                executable = "tectonic",
+                executable = "sh",
                 args = {
-                    "-X",
-                    "compile",
-                    "--synctex",
-                    "-Z", "shell-escape",
-                    "%f",
+                    "-c",
+                    "rm -f tex.log && tectonic -X compile --synctex -Z shell-escape %f > tex.log 2>&1",
                 },
                 onSave = false,
                 forwardSearchAfter = true,
