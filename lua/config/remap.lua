@@ -56,6 +56,37 @@ map("n", "<leader>tc", function()
     end
 end, { desc = "Toggle clipboard" })
 
+vim.keymap.set('n', '<C-LeftMouse>', function()
+  -- 1. Find exactly where the mouse clicked
+  local mouse = vim.fn.getmousepos()
+  if mouse.winid > 0 and mouse.line > 0 then
+    vim.api.nvim_set_current_win(mouse.winid)
+    local col = math.max(0, mouse.column - 1)
+    pcall(vim.api.nvim_win_set_cursor, mouse.winid, {mouse.line, col})
+  end
+
+  -- 2. Extract the file path or URL under the cursor
+  local path = vim.fn.expand("<cfile>")
+  if path == "" then return end
+
+  -- 3. If it's a web URL, open it directly
+  if path:match("^https?://") or path:match("^www%.") then
+    vim.ui.open(path)
+    return
+  end
+
+  -- 4. If it's a local file, make it absolute relative to the active file's directory
+  local current_file_dir = vim.fn.expand("%:p:h")
+  local absolute_path = current_file_dir .. "/" .. path
+
+  -- 5. Open the resolved path if it exists, otherwise fall back to literal string
+  if vim.fn.filereadable(absolute_path) == 1 or vim.fn.isdirectory(absolute_path) == 1 then
+    vim.ui.open(absolute_path)
+  else
+    vim.ui.open(path) 
+  end
+end, { silent = true, desc = "Smart open file/URL under mouse click" })
+
 -- -- RunCode Plugin
 -- map('n', '<leader>rr', ':RunCode<CR>', { noremap = true, silent = false })
 -- map('n', '<leader>rf', ':RunFile<CR>', { noremap = true, silent = false })
