@@ -40,3 +40,7 @@ end, { desc = "TeX: Build (Tectonic)" })
 map("n", "<leader>rf", function()
     texlab_request("textDocument/forwardSearch", "Forward search")
 end, { desc = "TeX: Forward search (Zathura)" })
+
+vim.b.surround_110 = "\\textbf{\r}"
+vim.b.surround_105 = "\\textit{\r}"
+vim.b.surround_116 = "\\texttt{\r}"
